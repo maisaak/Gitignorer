@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101116" />
+    <meta name="description" content="Build a clean, stack-aware .gitignore in seconds." />
+    <title>Gitignorer — ignore the noise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Gitignorer home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>gitignorer<span class="brand-dot">.</span></span>
+        </a>
+        <nav class="top-nav" aria-label="Main navigation">
+          <a href="#builder">Builder</a>
+          <a href="#how-it-works">How it works</a>
+        </nav>
+        <span class="local-pill"><span class="status-dot"></span> Runs locally</span>
+      </header>
+
+      <main>
+        <section class="hero" id="builder">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span> CLEAN REPOS START HERE</div>
+            <h1>Ignore the noise.<br /><span>Keep the good stuff.</span></h1>
+            <p>Build a precise <code>.gitignore</code> for your stack. Pick technologies or drop in your project files — your source and lockfiles stay safe.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="hero-file"><div class="file-fold"></div><div class="file-top"><span class="file-dot"></span> .gitignore</div><div class="file-lines"><i></i><i></i><i></i><i></i><i></i></div><div class="file-check">✓</div></div>
+            <span class="float-chip chip-node">JS</span><span class="float-chip chip-python">Py</span><span class="float-chip chip-rust">Rs</span>
+          </div>
+        </section>
+
+        <section class="workspace" aria-label="Gitignore builder">
+          <div class="builder-column">
+            <div class="section-heading"><span class="step-number">01</span><div><h2>Choose your stack</h2><p>We’ll detect markers in your file list, or you can select manually.</p></div></div>
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose or drop project files">
+              <input id="file-picker" type="file" webkitdirectory multiple hidden />
+              <span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v5h14v-5" /></svg></span>
+              <div class="drop-copy"><strong>Drop project files here</strong><span>or <button class="text-button" id="browse-files" type="button">browse folder</button> · paths only · file contents stay local</span></div>
+              <span class="drop-label">AUTO-DETECT</span>
+            </div>
+            <div class="file-list-row" id="file-list-row" hidden><span class="file-count" id="file-count"></span><button class="clear-button" id="clear-files" type="button">Clear file list</button></div>
+            <label class="file-list-label" for="file-list">Or paste file paths <span>one per line</span></label>
+            <textarea id="file-list" class="path-input" rows="2" placeholder="package.json&#10;src/index.ts"></textarea>
+
+            <div class="technology-heading"><span class="tiny-label">TECHNOLOGIES</span><span class="detected-count" id="detected-count">Nothing detected yet</span></div>
+            <div id="stack-groups" class="stack-groups" aria-live="polite"></div>
+
+            <details class="advanced-panel">
+              <summary><span class="advanced-icon">＋</span> Advanced options <span class="optional">OPTIONAL</span></summary>
+              <label class="toggle-row" for="dotenv-toggle"><span><strong>Project uses dotenv</strong><small>Add .env and *.env patterns to protect local secrets.</small></span><input id="dotenv-toggle" type="checkbox" /><span class="toggle-ui"></span></label>
+              <label class="existing-label" for="existing-rules">Existing .gitignore rules <span>custom rules are kept at the bottom</span></label>
+              <textarea id="existing-rules" class="existing-input" rows="5" placeholder="# Existing rules are preserved&#10;secrets/*.yaml&#10;data/local/"></textarea>
+            </details>
+
+            <div class="generate-row"><span class="privacy-note"><span>◆</span> No file contents are uploaded</span><button id="generate-button" class="primary-button" type="button">Generate .gitignore <span aria-hidden="true">→</span></button></div>
+          </div>
+
+          <aside class="preview-card" aria-label="Generated file preview">
+            <div class="preview-header"><div><span class="preview-kicker">YOUR OUTPUT</span><div class="preview-title"><span class="filetype-icon">⌁</span><strong>.gitignore</strong><span id="line-badge" class="line-badge">0 lines</span></div></div><span class="preview-status"><i></i><span id="preview-status-text">Ready to build</span></span></div>
+            <div class="preview-toolbar"><span><i class="language-dot"></i> gitignore</span><div class="toolbar-actions"><button id="copy-button" class="icon-button" type="button" title="Copy to clipboard" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button><button id="download-button" class="download-button" type="button"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg> Download</button></div></div>
+            <div class="code-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true"></div><pre id="output" tabindex="0" aria-label="Generated gitignore preview"><code id="output-code"><span class="placeholder-comment"># Your tailored rules will appear here.</span>
+<span class="placeholder-comment"># Select your stack, then generate.</span></code></pre></div>
+            <div id="notice" class="notice" role="status" hidden></div>
+            <div class="preview-footer"><span><span class="footer-check">✓</span> Lockfiles and source stay tracked</span><span id="custom-count">No custom rules</span></div>
+          </aside>
+        </section>
+
+        <section class="how-section" id="how-it-works"><div class="how-heading"><span class="tiny-label">SIMPLE BY DESIGN</span><h2>Three steps. A cleaner repo.</h2></div><div class="how-grid"><article><span class="how-number">01</span><h3>Detect or select</h3><p>Drop a folder or choose your stack. Detection happens in your browser using file names only.</p></article><article><span class="how-number">02</span><h3>Review the rules</h3><p>Preview a deduplicated set of useful defaults, with room for your own project-specific rules.</p></article><article><span class="how-number">03</span><h3>Save and ship</h3><p>Copy or download the result. Source directories and dependency lockfiles are never ignored.</p></article></div></section>
+      </main>
+      <footer class="footer"><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>gitignorer<span class="brand-dot">.</span></span></a><span>Small rules. Cleaner history.</span><span class="footer-version">Built for developers <span>✳</span></span></footer>
+    </div>
+  </body>
+</html>
